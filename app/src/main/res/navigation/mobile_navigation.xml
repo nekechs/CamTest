@@ -52,4 +52,7 @@
         android:name="com.example.camtest.Main2Activity"
         android:label="activity_main2"
         tools:layout="@layout/activity_main2" />
+    <navigation
+        android:id="@+id/navigation"
+        app:startDestination="@id/nav_home" />
 </navigation>

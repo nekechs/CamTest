@@ -2,19 +2,28 @@ package com.example.camtest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Switch;
 
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
-    public int runningCount = 0;
-    Button addBtn;
-    Button resetBtn;
-    TextView txView;
+    private static final int REQUEST_ENABLE_BT = 0;
+    private static final int REQUEST_DISCOVER_BT = 1;
+
+    TextView blueStatusTV, pairedTv;
+    ImageView blueIV;
+    Button enSec, disSec, discover, pairDevice;
+    Switch btToggle;
+
+    BluetoothAdapter mBlueAdapter;
 
     TimeKeeper timer = new TimeKeeper(999999);
 
@@ -23,27 +32,41 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addBtn = (Button) findViewById(R.id.addOne);
-        resetBtn = (Button) findViewById(R.id.resetBt);
+        blueStatusTV = findViewById(R.id.btConStat);
+        pairedTv = findViewById(R.id.numBox);
+        enSec = findViewById(R.id.addOne);
+        disSec = findViewById(R.id.resetBt);
+        discover = findViewById(R.id.discover);
+        pairDevice = findViewById(R.id.getPairDevice);
+        btToggle = findViewById(R.id.btToggle);
 
-        txView = (TextView) findViewById(R.id.numBox);
+        mBlueAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        txView.setText(Integer.toString(runningCount));
+        if(mBlueAdapter == null) {
+            blueStatusTV.setText("Bluetooth is not available.");
+        }
 
-        addBtn.setOnClickListener(new View.OnClickListener() {
+        else {
+            blueStatusTV.setText("Bluetooth is available!");
+        }
+
+        btToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
 
-                runningCount ++;
-                txView.setText(Integer.toString(runningCount));
+                }
+
+                else {
+
+                }
             }
         });
 
-        resetBtn.setOnClickListener(new View.OnClickListener() {
+        discover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                runningCount = 0;
-                txView.setText(Integer.toString(runningCount));
+
             }
         });
 
